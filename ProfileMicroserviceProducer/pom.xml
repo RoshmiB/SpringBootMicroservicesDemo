@@ -6,7 +6,7 @@
 	<groupId>com.jcombat</groupId>
 	<artifactId>ProfileMicroserviceProducer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>ProfileMicroserviceProducer</name>
 	<description>It is microservice server of accounts using Spring Boot</description>
@@ -68,6 +68,25 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+        		<groupId>com.spotify</groupId>
+        		<artifactId>dockerfile-maven-plugin</artifactId>
+        		<version>1.4.9</version>
+        		<executions>
+            		<execution>
+                		<id>default</id>
+                		<goals>
+                    		<goal>build</goal>
+                    		<goal>tag</goal>
+                    		<goal>push</goal>
+                		</goals>
+            		</execution>
+        		</executions>
+       			<configuration>
+                <repository>producer-profile</repository>
+            		<tag>v1</tag>
+        		</configuration>
+    		</plugin>
 		</plugins>
 	</build>
 </project>

@@ -6,7 +6,7 @@
 	<groupId>com.jcombat</groupId>
 	<artifactId>ProfileMicroserviceConsumer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>ProfileMicroserviceConsumer</name>
 	<description>It is microservice web client server using Spring Boot</description>
@@ -76,6 +76,25 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+        		<groupId>com.spotify</groupId>
+        		<artifactId>dockerfile-maven-plugin</artifactId>
+        		<version>1.4.9</version>
+        		<executions>
+            		<execution>
+                		<id>default</id>
+                		<goals>
+                    		<goal>build</goal>
+                    		<goal>tag</goal>
+                    		<goal>push</goal>
+                		</goals>
+            		</execution>
+        		</executions>
+       			<configuration>
+                <repository>consumer-profile</repository>
+            		<tag>v1</tag>
+        		</configuration>
+    		</plugin>
 		</plugins>
 	</build>
 </project>

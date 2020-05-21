@@ -8,7 +8,7 @@ spring:
 eureka:
     client:
       serviceUrl:
-        defaultZone: http://localhost:1111/eureka/
+        defaultZone: ${EUREKA_SERVER:http://localhost:1111/eureka/}
 
 # HTTP Server (Tomcat) Port
 server: 
