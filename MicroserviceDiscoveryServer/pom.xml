@@ -6,7 +6,7 @@
 	<groupId>com.jcombat</groupId>
 	<artifactId>MicroserviceDiscoveryServer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>MicroserviceDiscoveryServer</name>
 	<description>Microservice discovery server using Spring Boot</description>
@@ -79,7 +79,7 @@
         		</executions>
        			<configuration>
      	          <repository>discovery</repository>
-            		<tag>latest</tag>
+            		<tag>v1</tag>
         		</configuration>
     		</plugin>
 		</plugins>
