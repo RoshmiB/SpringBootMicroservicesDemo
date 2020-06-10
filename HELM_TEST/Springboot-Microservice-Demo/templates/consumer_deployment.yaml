@@ -7,7 +7,6 @@ metadata:
   labels:
     app: consumer
   name: consumer
-  namespace: default
 spec:
   replicas: 2
   selector:

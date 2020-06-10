@@ -4,6 +4,10 @@ services:
     image: discovery:latest
     ports:
       - 1111:1111
+    networks:
+      my_isolated_bridge_network:
+        ipv4_address: 172.19.0.5
+      
   producer-profile:
     image: producer-profile:v1
     environment:
@@ -14,6 +18,10 @@ services:
       - discovery
     ports:
       - 2222:2222
+    networks:
+      my_isolated_bridge_network:
+        ipv4_address: 172.19.0.6
+      
   consumer-profile:
     image: consumer-profile:v1
     environment:
@@ -23,3 +31,15 @@ services:
       - discovery
     ports:
       - 8080:8080
+    networks:
+      my_isolated_bridge_network:
+        ipv4_address: 172.19.0.7
+        
+networks:
+  my_isolated_bridge_network:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: 172.19.0.0/16
+         # gateway: 172.19.0.1

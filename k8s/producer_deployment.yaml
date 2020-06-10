@@ -5,14 +5,14 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: producer
-  name: producer
+    app: profiles-microservice-producer
+  name: profiles-microservice-producer
   namespace: default
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: producer
+      app: profiles-microservice-producer
   strategy: 
     rollingUpdate:
       maxSurge: 1
@@ -22,15 +22,15 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: producer
+        app: profiles-microservice-producer
     spec:
       containers:
       - image: gcr.io/automatic-hawk-276011/producer-profile:v1
-        name: producer
+        name: profiles-microservice-producer
         env:
         - name: JAVA_OPTS
           value: >-
-                -DEUREKA_SERVER=http://discovery:1111/eureka
+                -DEUREKA_SERVER=http://discovery:1111/eureka -Deureka.instance.preferIpAddress=true
         ports:
         - name: main
           protocol: TCP
@@ -41,12 +41,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: producer
+  name: profiles-microservice-producer
   labels:
-    app: producer
+    app: profiles-microservice-producer
 spec:
+  # loadBalancerIP: 35.197.138.137
   selector:
-    app: producer
+    app: profiles-microservice-producer
   type: LoadBalancer
   ports:
   - port: 2222
