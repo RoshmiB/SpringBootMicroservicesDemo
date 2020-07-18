@@ -25,8 +25,8 @@ spec:
         app: discovery
     spec:
       containers:
-      - image: gcr.io/automatic-hawk-276011/discovery:latest
-        name: discovery
+      - image: gcr.io/automatic-hawk-276011/discovery_with_log:latest
+        name: discovery   
         ports:
         - name: main
           protocol: TCP
@@ -51,10 +51,38 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1    
+        env:
+        - name: NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        volumeMounts:
+            - name: varlog
+              mountPath: /tmp
+              # subPath: $(NAME)
+                # fieldRef:
+                    # fieldPath: metadata.namespace_metadata.name_metadata.uid
+            # - name: varlibdockercontainers
+              # mountPath: /var/lib/docker/containers   
+      - image: busybox
+        name: count-log-1
+        args: [/bin/sh, -c, 'tail -n+1 -f /tmp/output.log']
+        volumeMounts:
+            - name: varlog
+              mountPath: /tmp
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
-      terminationGracePeriodSeconds: 30
+      terminationGracePeriodSeconds: 30        
+      volumes:
+        - name: varlog
+          emptyDir: {}
+        # - name: varlog
+          # hostPath:
+            # path: "/var/log/$NAMESPACE_$NAME_$UID"
+        # - name: varlibdockercontainers
+          # hostPath:
+            # path: /var/lib/docker/containers  
       
 ---
 
@@ -67,9 +95,9 @@ metadata:
 spec:
   selector:
     app: discovery
-  type: LoadBalancer
+  type: NodePort
   ports:
   - port: 1111
     protocol: TCP
     targetPort: 1111
-    # nodePort: 1111
+    nodePort: 30001
