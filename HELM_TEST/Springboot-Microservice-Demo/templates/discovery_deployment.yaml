@@ -24,7 +24,7 @@ spec:
         app: discovery
     spec:
       containers:
-      - image: gcr.io/automatic-hawk-276011/discovery_with_log:latest
+      - image: gcr.io/automatic-hawk-276011/discovery:latest
         name: discovery
         ports:
         - name: main
