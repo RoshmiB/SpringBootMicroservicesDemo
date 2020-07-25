@@ -3,7 +3,25 @@ pipeline {
     agent any
 
     stages {
-        stage("Git Checkout") {
+        stage("Code Checkout") {
+            steps {
+                println "checkout"
+            }
+        }
+
+        stage("Code build") {
+            steps {
+                println "checkout"
+            }
+        }
+
+        stage("Code test") {
+            steps {
+                println "checkout"
+            }
+        }
+
+        stage("Code deploy") {
             steps {
                 println "checkout"
             }
@@ -17,11 +35,11 @@ pipeline {
         }
 
         success {
-            bitbucketStatusNotify buildState: "SUCCESSFUL"
+            println "success"
         }
 
         failure {
-            bitbucketStatusNotify buildState: "FAILED"
+            println "failed"
         }
     }    
 
