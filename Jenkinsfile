@@ -5,19 +5,24 @@ pipeline {
     stages {
         stage("Code Checkout") {
             steps {
-                println "checkout"
+                checkout scm
             }
         }
 
         stage("Code build") {
             steps {
-                println "checkout"
+                echo 'Building native binary'
+                dir('webstore') {
+                    sh 'mvn clean build -DskipTests'
+                }    
             }
         }
 
         stage("Code test") {
             steps {
-                println "checkout"
+                dir('webstore') {
+                    sh 'mvn test'
+                }    
             }
         }
 
