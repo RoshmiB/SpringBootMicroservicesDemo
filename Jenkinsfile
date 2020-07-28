@@ -3,26 +3,33 @@ pipeline {
     agent any
 
     stages {
+        deleteDir()
         stage("Code Checkout") {
             steps {
                 checkout scm
             }
         }
 
-        stage("Code build") {
+        stage("Code build & docker image creation") {
             steps {
                 echo 'Building native binary'
-                dir('webstore') {
-                    sh 'mvn clean build -DskipTests'
+                dir('./MicroserviceDiscoveryServer') {
+                    sh '/usr/local/src/apache-maven/bin/mvn clean install -DskipTests'
                 }    
             }
         }
 
         stage("Code test") {
             steps {
-                dir('webstore') {
-                    sh 'mvn test'
+                dir('./MicroserviceDiscoveryServer') {
+                    sh '/usr/local/src/apache-maven/bin/mvn test'
                 }    
+            }
+        }
+        
+        stage("Push images to registry") {
+            steps {
+                println "checkout"
             }
         }
 
