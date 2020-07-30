@@ -30,10 +30,12 @@ pipeline {
         
         stage("Push images to registry") {
             steps {
-                docker.withRegistry("https://gcr.io", "automatic-hawk-276011") {
-                    sh 'docker tag discovery:v1 gcr.io/automatic-hawk-276011/discovery:vtest'
-                    sh 'docker push gcr.io/automatic-hawk-276011/discovery:vtest'
-                }
+                script{
+                    docker.withRegistry("https://gcr.io", "automatic-hawk-276011") {
+                        sh 'docker tag discovery:v1 gcr.io/automatic-hawk-276011/discovery:vtest'
+                        sh 'docker push gcr.io/automatic-hawk-276011/discovery:vtest'
+                    }
+                }    
             }
         }
 
