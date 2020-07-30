@@ -35,7 +35,7 @@ pipeline {
                         sh 'docker tag discovery:v1 gcr.io/automatic-hawk-276011/discovery:$BUILD_NUMBER'
                         sh 'docker push gcr.io/automatic-hawk-276011/discovery:vtest'
                         sh "docker rmi --force \$(docker images -q discovery:v1 | uniq)"
-                        sh "docker rmi --force \$(docker images -q gcr.io/automatic-hawk-276011/discovery:$BUILD_NUMBER | uniq)"
+                        //sh "docker rmi --force \$(docker images -q gcr.io/automatic-hawk-276011/discovery:$BUILD_NUMBER | uniq)"
                     }
                 }    
             }
