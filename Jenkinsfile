@@ -30,7 +30,10 @@ pipeline {
         
         stage("Push images to registry") {
             steps {
-                println "checkout"
+                docker.withRegistry("https://gcr.io", docker-cred) {
+                    docker tag discovery:v1 gcr.io/automatic-hawk-276011/discovery:vtest
+                    docker push gcr.io/automatic-hawk-276011/discovery:vtest
+                }
             }
         }
 
