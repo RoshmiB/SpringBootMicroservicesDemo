@@ -1,6 +1,12 @@
 #!/usr/bin/env groovy
 pipeline {
     agent any
+    environment {
+        PROJECT_ID = 'automatic-hawk-276011'
+        CLUSTER_NAME = 'my-first-cluster-1'
+        LOCATION = 'us-central1-c'
+        CREDENTIALS_ID = 'automatic-hawk-276011'
+    }
 
     stages {
         
@@ -28,7 +34,7 @@ pipeline {
             }
         }
         
-        stage("Push images to registry") {
+        stage("Push images to GCR registry") {
             steps {
                     withDockerRegistry([credentialsId: 'gcr:automatic-hawk-276011', url: 'https://gcr.io']) {
                         sh 'docker tag discovery:v1 gcr.io/automatic-hawk-276011/discovery:$BUILD_NUMBER'
@@ -39,9 +45,10 @@ pipeline {
             }
         }
 
-        stage("Code deploy") {
-            steps {
-                println "checkout"
+        stage('Deploy to GKE') {
+            steps{
+                sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
 
