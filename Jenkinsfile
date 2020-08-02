@@ -74,7 +74,7 @@ pipeline {
                       projectId: env.PROJECT_ID, 
                       clusterName: env.CLUSTER_NAME, 
                       location: env.LOCATION,
-                      manifestPattern: './HELM_TEST/Springboot-Microservice-Demo/templates/*.yaml',
+                      manifestPattern: './HELM_TEST/Springboot-Microservice-Demo/templates/',
                       //'./HELM_TEST/Springboot-Microservice-Demo/templates/consumer_deployment.yaml','./HELM_TEST/Springboot-Microservice-Demo/templates/producer_deployment.yaml',
                       credentialsId: env.CREDENTIALS_ID, 
                       verifyDeployments: false])
