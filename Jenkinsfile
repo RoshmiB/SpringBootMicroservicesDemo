@@ -6,6 +6,7 @@ pipeline {
         CLUSTER_NAME = 'my-first-cluster-1'
         LOCATION = 'us-central1-c'
         CREDENTIALS_ID = 'automatic-hawk-276011'
+        NAMESPACE = 'default'
     }
 
     stages {
@@ -47,8 +48,15 @@ pipeline {
 
         stage('Deploy to GKE') {
             steps{
-                sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+                sh "sed -i 's/discovery:latest/discovery:${env.BUILD_NUMBER}/g' ./k8s/discovery_deployment.yaml"
+                step([$class: 'KubernetesEngineBuilder',
+                      namespace: "${env.NAMESPACE}",
+                      projectId: env.PROJECT_ID, 
+                      clusterName: env.CLUSTER_NAME, 
+                      location: env.LOCATION, 
+                      manifestPattern: './k8s/discovery_deployment.yaml', 
+                      credentialsId: env.CREDENTIALS_ID, 
+                      verifyDeployments: true])
             }
         }
 
