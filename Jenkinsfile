@@ -48,8 +48,7 @@ pipeline {
 
         stage('Deploy to GKE') {
             steps{
-                sh "sed -i 's/discovery:latest/discovery:${env.BUILD_NUMBER}/g' ./HELM_TEST/Springboot-Microservice-Demo/templates/discovery_deployment.yaml
-/discovery_deployment.yaml"
+                sh "sed -i 's/discovery:latest/discovery:${env.BUILD_NUMBER}/g' ./HELM_TEST/Springboot-Microservice-Demo/templates/discovery_deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder',
                       namespace: "${env.NAMESPACE}",
                       projectId: env.PROJECT_ID, 
