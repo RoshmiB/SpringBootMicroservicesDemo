@@ -74,7 +74,27 @@ pipeline {
                       projectId: env.PROJECT_ID, 
                       clusterName: env.CLUSTER_NAME, 
                       location: env.LOCATION,
-                      manifestPattern: './HELM_TEST/Springboot-Microservice-Demo/templates/',
+                      manifestPattern: './HELM_TEST/Springboot-Microservice-Demo/templates/discovery_deployment.yaml',
+                      //'./HELM_TEST/Springboot-Microservice-Demo/templates/consumer_deployment.yaml','./HELM_TEST/Springboot-Microservice-Demo/templates/producer_deployment.yaml',
+                      credentialsId: env.CREDENTIALS_ID, 
+                      verifyDeployments: false])
+                
+                step([$class: 'KubernetesEngineBuilder',
+                      namespace: "${env.NAMESPACE}",
+                      projectId: env.PROJECT_ID, 
+                      clusterName: env.CLUSTER_NAME, 
+                      location: env.LOCATION,
+                      manifestPattern: './HELM_TEST/Springboot-Microservice-Demo/templates/consumer_deployment.yaml',
+                      //'./HELM_TEST/Springboot-Microservice-Demo/templates/consumer_deployment.yaml','./HELM_TEST/Springboot-Microservice-Demo/templates/producer_deployment.yaml',
+                      credentialsId: env.CREDENTIALS_ID, 
+                      verifyDeployments: false])
+                
+                step([$class: 'KubernetesEngineBuilder',
+                      namespace: "${env.NAMESPACE}",
+                      projectId: env.PROJECT_ID, 
+                      clusterName: env.CLUSTER_NAME, 
+                      location: env.LOCATION,
+                      manifestPattern: './HELM_TEST/Springboot-Microservice-Demo/templates/producer_deployment.yaml',
                       //'./HELM_TEST/Springboot-Microservice-Demo/templates/consumer_deployment.yaml','./HELM_TEST/Springboot-Microservice-Demo/templates/producer_deployment.yaml',
                       credentialsId: env.CREDENTIALS_ID, 
                       verifyDeployments: false])
